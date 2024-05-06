@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.w600),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          print("My name is presse");
+                          print("My name is Berker");
                         })
                 ])),
             const SizedBox(
