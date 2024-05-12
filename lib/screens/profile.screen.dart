@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/dark_theme_provider.dart';
+import 'package:flutter_application_1/screens/orders/order_screen.dart';
+import 'package:flutter_application_1/screens/viewed/viewed_screen.dart';
+import 'package:flutter_application_1/screens/wishlist/wishlist_screen.dart';
+import 'package:flutter_application_1/services/global_methods.dart';
 import 'package:flutter_application_1/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +19,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController _addressTextController =
+      TextEditingController(text: "");
+
+  @override
+  void dispose() {
+    _addressTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
@@ -59,28 +72,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 20,
             ),
             _listTiles(
-              title: 'Adress',
+              title: 'Adress 2',
               subtitle: 'Subtitle Here',
               icon: IconlyLight.profile,
-              onPressed: () {},
+              onPressed: () async {
+                await _showAddressDialog();
+              },
               color: color,
             ),
             _listTiles(
               title: 'Orders',
               icon: IconlyLight.bag,
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethods()
+                    .navigateTo(ctx: context, routeName: OrderScreen.routeName);
+              },
               color: color,
             ),
             _listTiles(
               title: 'Wishlist',
               icon: IconlyLight.heart,
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethods().navigateTo(
+                    ctx: context, routeName: WishlistScreen.routeName);
+              },
               color: color,
             ),
             _listTiles(
               title: 'Viewed',
               icon: IconlyLight.show,
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethods().navigateTo(
+                    ctx: context, routeName: ViewedScreen.routeName);
+              },
               color: color,
             ),
             _listTiles(
@@ -91,9 +115,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             SwitchListTile(
               title: TextWidget(
-                  text: themeState.getDarkTheme ? "Dark Mode" : "Light Mode",
-                  color: color,
-                  textSize: 18),
+                text: themeState.getDarkTheme ? "Dark Mode" : "Light Mode",
+                color: color,
+                textSize: 18,
+              ),
               secondary: Icon(themeState.getDarkTheme
                   ? Icons.dark_mode_outlined
                   : Icons.light_mode_outlined),
@@ -107,13 +132,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _listTiles(
               title: 'Logout',
               icon: IconlyLight.logout,
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethods().warningDialog(
+                    title: 'Sign out',
+                    subtitle: 'Do you wanna sign out?',
+                    fct: () {},
+                    context: context);
+              },
               color: color,
             )
           ],
         ),
       ),
     ));
+  }
+
+  Future<void> _showAddressDialog() async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Update"),
+            content: TextField(
+              // onChanged: (value) {
+              //   print(
+              //       '_addressTextController.text ${_addressTextController.text}');
+              // },
+              controller: _addressTextController,
+              maxLines: 5,
+              decoration: const InputDecoration(hintText: "Your Address"),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {},
+                child: const Text("Update"),
+              )
+            ],
+          );
+        });
   }
 
   Widget _listTiles(
