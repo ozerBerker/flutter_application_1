@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/consts/theme_data.dart';
+import 'package:flutter_application_1/inner_screens/category_screen.dart';
 import 'package:flutter_application_1/inner_screens/feed_screen.dart';
 import 'package:flutter_application_1/inner_screens/on_sale_screen.dart';
 import 'package:flutter_application_1/inner_screens/product_details_screen.dart';
 import 'package:flutter_application_1/provider/dark_theme_provider.dart';
+import 'package:flutter_application_1/providers/cart_prodivder.dart';
+import 'package:flutter_application_1/providers/products_provider.dart';
+import 'package:flutter_application_1/providers/viewed_provider.dart';
+import 'package:flutter_application_1/providers/wishlist_provider.dart';
 import 'package:flutter_application_1/screens/auth/forgot_passwprd.dart';
 import 'package:flutter_application_1/screens/auth/login.dart';
 import 'package:flutter_application_1/screens/auth/register.dart';
@@ -50,7 +55,19 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) {
           return themeChangeProvider;
-        })
+        }),
+        ChangeNotifierProvider(
+          create: (_) => ProductsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WishlistProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ViewedProductProvider(),
+        ),
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
@@ -66,6 +83,7 @@ class _MyAppState extends State<MyApp> {
               WishlistScreen.routeName: (ctx) => const WishlistScreen(),
               OrderScreen.routeName: (ctx) => const OrderScreen(),
               ViewedScreen.routeName: (ctx) => const ViewedScreen(),
+              CategoryScreen.routeName: (ctx) => const CategoryScreen(),
               LoginScreen.routeName: (ctx) => const LoginScreen(),
               RegisterScreen.routeName: (ctx) => const RegisterScreen(),
               ForgotPasswordScreen.routeName: (ctx) =>

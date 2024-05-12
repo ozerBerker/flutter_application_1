@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/viewed_provider.dart';
 import 'package:flutter_application_1/screens/orders/order_widget.dart';
 import 'package:flutter_application_1/screens/viewed/viewed_widget.dart';
 import 'package:flutter_application_1/services/global_methods.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_application_1/widgets/back_widget.dart';
 import 'package:flutter_application_1/widgets/empty_screen.dart';
 import 'package:flutter_application_1/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 class ViewedScreen extends StatelessWidget {
   static const routeName = '/ViewedScreen';
@@ -19,51 +21,53 @@ class ViewedScreen extends StatelessWidget {
 
     bool _isEmpty = true;
 
-    if (_isEmpty == true) {
-      return const EmptyScreen(
-        title: 'Your history is empty',
-        subtitle: 'No products has been viewed yet!',
-        buttonText: 'Shop now',
-        imagePath: 'assets/images/history.png',
-      );
-    } else {
-      return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            leading: const BackWidget(),
-            elevation: 0,
-            centerTitle: true,
-            backgroundColor:
-                Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
-            title: TextWidget(
-              text: 'History',
-              color: color,
-              textSize: 24,
-              isTitle: true,
+    final viewedProvider = Provider.of<ViewedProductProvider>(context);
+    final viewedItemList =
+        viewedProvider.getViewedProdlistItems.values.toList().reversed.toList();
+    return viewedItemList.isEmpty
+        ? const EmptyScreen(
+            title: 'Your history is empty',
+            subtitle: 'No products has been viewed yet!',
+            buttonText: 'Shop now',
+            imagePath: 'assets/images/history.png',
+          )
+        : Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: const BackWidget(),
+              elevation: 0,
+              centerTitle: true,
+              backgroundColor:
+                  Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+              title: TextWidget(
+                text: 'History',
+                color: color,
+                textSize: 24,
+                isTitle: true,
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      GlobalMethods().warningDialog(
+                          title: 'Empty your cart?',
+                          subtitle: 'Are you sıre?',
+                          fct: () {},
+                          context: context);
+                    },
+                    icon: Icon(
+                      IconlyBroken.delete,
+                      color: color,
+                    ))
+              ],
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    GlobalMethods().warningDialog(
-                        title: 'Empty your cart?',
-                        subtitle: 'Are you sıre?',
-                        fct: () {},
-                        context: context);
-                  },
-                  icon: Icon(
-                    IconlyBroken.delete,
-                    color: color,
-                  ))
-            ],
-          ),
-          body: ListView.builder(
-              itemCount: 10,
-              itemBuilder: ((context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                  child: ViewedWidget(),
-                );
-              })));
-    }
+            body: ListView.builder(
+                itemCount: viewedItemList.length,
+                itemBuilder: ((context, index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: ChangeNotifierProvider.value(
+                        value: viewedItemList[index], child: ViewedWidget()),
+                  );
+                })));
   }
 }

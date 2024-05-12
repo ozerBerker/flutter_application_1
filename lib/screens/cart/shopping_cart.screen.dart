@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/providers/cart_prodivder.dart';
 import 'package:flutter_application_1/widgets/empty_screen.dart';
 import 'package:flutter_application_1/screens/cart/shopping_cart_widget.dart';
 import 'package:flutter_application_1/services/global_methods.dart';
 import 'package:flutter_application_1/services/utils.dart';
 import 'package:flutter_application_1/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingCartScreen extends StatelessWidget {
   const ShoppingCartScreen({super.key});
@@ -17,9 +19,11 @@ class ShoppingCartScreen extends StatelessWidget {
     Size size = utils.getScreenSize;
     Color color = utils.color;
 
-    bool _isEmpty = true;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItemList =
+        cartProvider.getCartItems.values.toList().reversed.toList();
 
-    return _isEmpty
+    return cartItemList.isEmpty
         ? const EmptyScreen(
             title: 'Your cart is empty',
             subtitle: 'Add something and make me happy :)',
@@ -31,7 +35,7 @@ class ShoppingCartScreen extends StatelessWidget {
               elevation: 0,
               backgroundColor: Theme.of(context).cardColor,
               title: TextWidget(
-                text: 'Cart (2)',
+                text: 'Cart (${cartItemList.length})',
                 color: color,
                 textSize: 22,
                 isTitle: true,
@@ -42,7 +46,9 @@ class ShoppingCartScreen extends StatelessWidget {
                       GlobalMethods().warningDialog(
                           title: 'Empty your cart?',
                           subtitle: 'Are you sıre?',
-                          fct: () {},
+                          fct: () {
+                            cartProvider.clearCart();
+                          },
                           context: context);
                     },
                     icon: Icon(
@@ -56,9 +62,13 @@ class ShoppingCartScreen extends StatelessWidget {
                 _checkout(ctx: context),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: cartItemList.length,
                       itemBuilder: (ctx, index) {
-                        return ShoppingCartWidget();
+                        return ChangeNotifierProvider.value(
+                            value: cartItemList[index],
+                            child: ShoppingCartWidget(
+                              quantity: cartItemList[index].quantity,
+                            ));
                       }),
                 ),
               ],

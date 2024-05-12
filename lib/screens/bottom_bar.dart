@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/provider/dark_theme_provider.dart';
+import 'package:flutter_application_1/providers/cart_prodivder.dart';
 import 'package:flutter_application_1/screens/categories.screen.dart';
 import 'package:flutter_application_1/screens/home.screen.dart';
 import 'package:flutter_application_1/screens/profile.screen.dart';
@@ -17,12 +18,12 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'Home Screen'},
     {'page': CategoriesScreen(), 'title': 'Categories Screen'},
     {'page': const ShoppingCartScreen(), 'title': 'Shopping Cart Screen'},
-    {'page': const ProfileScreen(), 'title': 'Profile  Screen'}
+    {'page': const ProfileScreen(), 'title': 'Profile  Screen'},
   ];
   void _selectedPage(int index) {
     setState(() {
@@ -33,6 +34,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
+
     bool _isDark = themeState.getDarkTheme;
     return Scaffold(
       // appBar: AppBar(
@@ -59,21 +61,25 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                   : IconlyLight.category),
               label: "Categories"),
           BottomNavigationBarItem(
-              icon: badges.Badge(
-                badgeContent: FittedBox(
-                    child: TextWidget(
-                        text: '1', color: Colors.white, textSize: 15)),
-                position: badges.BadgePosition.topEnd(top: -15, end: -10),
-                badgeStyle: badges.BadgeStyle(
-                  shape: badges.BadgeShape.circle,
-                  badgeColor: Colors.blue,
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.white, width: 2),
-                  elevation: 0,
-                ),
-                child: Icon(
-                    _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
-              ),
+              icon: Consumer<CartProvider>(builder: (_, myCart, ch) {
+                return badges.Badge(
+                  badgeContent: FittedBox(
+                      child: TextWidget(
+                          text: myCart.getCartItems.length.toString(),
+                          color: Colors.white,
+                          textSize: 15)),
+                  position: badges.BadgePosition.topEnd(top: -15, end: -10),
+                  badgeStyle: badges.BadgeStyle(
+                    shape: badges.BadgeShape.circle,
+                    badgeColor: Colors.blue,
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.white, width: 2),
+                    elevation: 0,
+                  ),
+                  child: Icon(
+                      _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+                );
+              }),
               label: "Shoppping Cart"),
           BottomNavigationBarItem(
               icon: Icon(

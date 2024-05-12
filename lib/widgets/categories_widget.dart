@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/inner_screens/category_screen.dart';
 import 'package:flutter_application_1/provider/dark_theme_provider.dart';
 import 'package:flutter_application_1/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,8 @@ class CategoriesWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        print('Category Pressed.');
+        Navigator.pushNamed(context, CategoryScreen.routeName,
+            arguments: catText);
       },
       child: Container(
         decoration: BoxDecoration(

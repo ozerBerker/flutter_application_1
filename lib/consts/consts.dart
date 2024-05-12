@@ -1,3 +1,5 @@
+import 'package:flutter_application_1/models/products_model.dart';
+
 class Consts {
   static final List<String> offerImages = [
     'assets/images/offres/Offer1.jpg',

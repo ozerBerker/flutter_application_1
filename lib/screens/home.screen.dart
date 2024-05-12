@@ -5,7 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/inner_screens/feed_screen.dart';
 import 'package:flutter_application_1/inner_screens/on_sale_screen.dart';
+import 'package:flutter_application_1/models/products_model.dart';
 import 'package:flutter_application_1/provider/dark_theme_provider.dart';
+import 'package:flutter_application_1/providers/products_provider.dart';
 import 'package:flutter_application_1/services/global_methods.dart';
 import 'package:flutter_application_1/services/utils.dart';
 import 'package:flutter_application_1/widgets/feed_items.dart';
@@ -30,6 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Color color = utils.color;
 
     GlobalMethods globalMethods = GlobalMethods();
+
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productProviders.getProducts;
+    List<ProductModel> onSaleProducts = productProviders.getOnSaleProducts;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -98,10 +104,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: SizedBox(
                     height: size.height * 0.24,
                     child: ListView.builder(
-                        itemCount: 10,
+                        itemCount: onSaleProducts.length < 10
+                            ? onSaleProducts.length
+                            : 10,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (ctx, index) {
-                          return const OnSaleWidget();
+                          return ChangeNotifierProvider.value(
+                              value: onSaleProducts[index],
+                              child: OnSaleWidget());
                         }),
                   ),
                 ),
@@ -143,8 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.zero,
               // crossAxisSpacing: 10,
               childAspectRatio: size.width / (size.height * 0.6),
-              children: List.generate(4, (index) {
-                return const FeedsWidget();
+              children: List.generate(
+                  allProducts.length < 4 ? allProducts.length : 4, (index) {
+                return ChangeNotifierProvider.value(
+                    value: allProducts[index], child: FeedsWidget());
               }),
             )
           ],

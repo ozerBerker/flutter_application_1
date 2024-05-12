@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/consts/consts.dart';
+import 'package:flutter_application_1/models/products_model.dart';
+import 'package:flutter_application_1/providers/products_provider.dart';
 import 'package:flutter_application_1/services/utils.dart';
 import 'package:flutter_application_1/widgets/back_widget.dart';
 import 'package:flutter_application_1/widgets/feed_items.dart';
 import 'package:flutter_application_1/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
   static const routeName = "/FeedsScreen";
@@ -30,6 +34,9 @@ class _FeedScreenState extends State<FeedScreen> {
     final Utils utils = Utils(context);
     Size size = utils.getScreenSize;
     Color color = utils.color;
+
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productProviders.getProducts;
 
     return Scaffold(
       appBar: AppBar(
@@ -90,8 +97,9 @@ class _FeedScreenState extends State<FeedScreen> {
               padding: EdgeInsets.zero,
               // crossAxisSpacing: 10,
               childAspectRatio: size.width / (size.height * 0.6),
-              children: List.generate(10, (index) {
-                return const FeedsWidget();
+              children: List.generate(allProducts.length, (index) {
+                return ChangeNotifierProvider.value(
+                    value: allProducts[index], child: FeedsWidget());
               }),
             )
           ],
