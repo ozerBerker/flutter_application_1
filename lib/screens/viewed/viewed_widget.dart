@@ -1,13 +1,15 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/inner_screens/product_details_screen.dart';
-import 'package:flutter_application_1/models/vieved_model.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/providers/products_provider.dart';
-import 'package:flutter_application_1/services/global_methods.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/consts/firebase_consts.dart';
+import 'package:mobile_app/inner_screens/product_details_screen.dart';
+import 'package:mobile_app/models/vieved_model.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/providers/products_provider.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -41,8 +43,8 @@ class _ViewedWidgetState extends State<ViewedWidget> {
       padding: EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          GlobalMethods()
-              .navigateTo(ctx: context, routeName: ProductDetails.routeName);
+          // GlobalMethods()
+          //     .navigateTo(ctx: context, routeName: ProductDetails.routeName);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,6 +88,13 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                   onTap: _isInCart
                       ? null
                       : () {
+                          final User? user = authInstance.currentUser;
+                          if (user == null) {
+                            GlobalMethods.errorDialog(
+                                subtitle: 'No user found, please log in first',
+                                context: context);
+                            return;
+                          }
                           cartProvider.addProductsToCart(
                               productId: getCurrProduct.id, quantity: 1);
                         },

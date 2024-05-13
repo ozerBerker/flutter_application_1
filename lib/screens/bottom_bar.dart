@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/provider/dark_theme_provider.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/screens/categories.screen.dart';
-import 'package:flutter_application_1/screens/home.screen.dart';
-import 'package:flutter_application_1/screens/profile.screen.dart';
-import 'package:flutter_application_1/screens/cart/shopping_cart.screen.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/provider/dark_theme_provider.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/screens/categories.screen.dart';
+import 'package:mobile_app/screens/home.screen.dart';
+import 'package:mobile_app/screens/profile.screen.dart';
+import 'package:mobile_app/screens/cart/shopping_cart.screen.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;

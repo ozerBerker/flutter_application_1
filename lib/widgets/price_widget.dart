@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 
 class PriceWidget extends StatelessWidget {
   const PriceWidget(

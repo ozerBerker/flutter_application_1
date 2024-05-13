@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/models/vieved_model.dart';
+import 'package:mobile_app/models/vieved_model.dart';
 
 class ViewedProductProvider with ChangeNotifier {
   Map<String, ViewedProductModel> _viewedProdlistItems = {};

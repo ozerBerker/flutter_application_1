@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/orders/order_widget.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/back_widget.dart';
-import 'package:flutter_application_1/widgets/empty_screen.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/screens/orders/order_widget.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/back_widget.dart';
+import 'package:mobile_app/widgets/empty_screen.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 
 class OrderScreen extends StatelessWidget {
   static const routeName = '/OrderScreen';

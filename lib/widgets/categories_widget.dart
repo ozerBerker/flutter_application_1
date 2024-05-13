@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/inner_screens/category_screen.dart';
-import 'package:flutter_application_1/provider/dark_theme_provider.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/inner_screens/category_screen.dart';
+import 'package:mobile_app/provider/dark_theme_provider.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesWidget extends StatelessWidget {

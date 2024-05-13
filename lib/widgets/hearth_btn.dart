@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/providers/wishlist_provider.dart';
-import 'package:flutter_application_1/services/utils.dart';
+import 'package:mobile_app/consts/firebase_consts.dart';
+import 'package:mobile_app/providers/wishlist_provider.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -20,13 +23,20 @@ class HeartButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        final User? user = authInstance.currentUser;
+        if (user == null) {
+          GlobalMethods.errorDialog(
+              subtitle: 'No user found, please log in first', context: context);
+          return;
+        }
+        // print('user id is ${user!.uid}');
         wishlistProvider.toggleProductToWishlist(productId: productId);
       },
       child: Icon(
         isInWishlist != null && isInWishlist == true
             ? IconlyBold.heart
             : IconlyLight.heart,
-        size: 22,
+        size: 20,
         color:
             isInWishlist != null && isInWishlist == true ? Colors.red : color,
       ),

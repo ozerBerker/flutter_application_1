@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/inner_screens/product_details_screen.dart';
-import 'package:flutter_application_1/models/cart_model.dart';
-import 'package:flutter_application_1/models/products_model.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/providers/products_provider.dart';
-import 'package:flutter_application_1/providers/wishlist_provider.dart';
-import 'package:flutter_application_1/services/global_methods.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/hearth_btn.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/inner_screens/product_details_screen.dart';
+import 'package:mobile_app/models/cart_model.dart';
+import 'package:mobile_app/models/products_model.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/providers/products_provider.dart';
+import 'package:mobile_app/providers/wishlist_provider.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/hearth_btn.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingCartWidget extends StatefulWidget {

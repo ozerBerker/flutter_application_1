@@ -1,14 +1,16 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/inner_screens/product_details_screen.dart';
-import 'package:flutter_application_1/models/products_model.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/providers/wishlist_provider.dart';
-import 'package:flutter_application_1/services/global_methods.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/hearth_btn.dart';
-import 'package:flutter_application_1/widgets/price_widget.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/consts/firebase_consts.dart';
+import 'package:mobile_app/inner_screens/product_details_screen.dart';
+import 'package:mobile_app/models/products_model.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/providers/wishlist_provider.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/hearth_btn.dart';
+import 'package:mobile_app/widgets/price_widget.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -61,8 +63,8 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     children: [
                       FancyShimmerImage(
                         imageUrl: productModel.imageUrl,
-                        height: size.width * 0.22,
-                        width: size.width * 0.22,
+                        height: size.width * 0.18,
+                        width: size.width * 0.18,
                         boxFit: BoxFit.fill,
                       ),
                       Column(
@@ -82,6 +84,15 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                 onTap: _isCInCart
                                     ? null
                                     : () {
+                                        final User? user =
+                                            authInstance.currentUser;
+                                        if (user == null) {
+                                          GlobalMethods.errorDialog(
+                                              subtitle:
+                                                  'No user found, please log in first',
+                                              context: context);
+                                          return;
+                                        }
                                         cartProvider.addProductsToCart(
                                             productId: productModel.id,
                                             quantity: 1);
@@ -90,7 +101,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                   _isCInCart
                                       ? IconlyBold.bag2
                                       : IconlyLight.bag2,
-                                  size: 22,
+                                  size: 20,
                                   color: _isCInCart ? Colors.green : color,
                                 ),
                               ),
@@ -116,6 +127,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     color: color,
                     textSize: 16,
                     isTitle: true,
+                    maxLines: 2,
                   ),
                   const SizedBox(height: 5),
                 ],

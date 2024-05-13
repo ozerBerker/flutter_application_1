@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/widgets/empty_screen.dart';
-import 'package:flutter_application_1/screens/cart/shopping_cart_widget.dart';
-import 'package:flutter_application_1/services/global_methods.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/widgets/empty_screen.dart';
+import 'package:mobile_app/screens/cart/shopping_cart_widget.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 

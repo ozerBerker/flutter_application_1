@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/services/utils.dart';
+import 'package:mobile_app/services/utils.dart';
 
 class EmptyProductWidget extends StatelessWidget {
   const EmptyProductWidget({super.key, required this.text});

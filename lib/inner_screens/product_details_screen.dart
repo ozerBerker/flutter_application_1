@@ -1,15 +1,18 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/providers/products_provider.dart';
-import 'package:flutter_application_1/providers/viewed_provider.dart';
-import 'package:flutter_application_1/providers/wishlist_provider.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/hearth_btn.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/consts/firebase_consts.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/providers/products_provider.dart';
+import 'package:mobile_app/providers/viewed_provider.dart';
+import 'package:mobile_app/providers/wishlist_provider.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/hearth_btn.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -297,6 +300,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 onTap: _isCInCart
                                     ? null
                                     : () {
+                                        final User? user =
+                                            authInstance.currentUser;
+                                        if (user == null) {
+                                          GlobalMethods.errorDialog(
+                                              subtitle:
+                                                  'No user found, please log in first',
+                                              context: context);
+                                          return;
+                                        }
                                         cartProvider.addProductsToCart(
                                             productId: getCurrProduct.id,
                                             quantity: int.parse(

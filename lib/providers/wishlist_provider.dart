@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/wishlist_model.dart';
+import 'package:mobile_app/models/wishlist_model.dart';
 
 class WishlistProvider with ChangeNotifier {
   Map<String, WishlistModel> _wishlistItems = {};
