@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/inner_screens/feed_screen.dart';
-import 'package:flutter_application_1/services/global_methods.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/inner_screens/feed_screen.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 
 class EmptyScreen extends StatelessWidget {
   const EmptyScreen(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/products_model.dart';
-import 'package:flutter_application_1/providers/products_provider.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/back_widget.dart';
-import 'package:flutter_application_1/widgets/empty_products_widget.dart';
-import 'package:flutter_application_1/widgets/on_sale_widget.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/models/products_model.dart';
+import 'package:mobile_app/providers/products_provider.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/back_widget.dart';
+import 'package:mobile_app/widgets/empty_products_widget.dart';
+import 'package:mobile_app/widgets/on_sale_widget.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 
 class AuthButton extends StatelessWidget {
   const AuthButton({

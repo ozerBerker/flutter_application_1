@@ -1,15 +1,17 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/inner_screens/product_details_screen.dart';
-import 'package:flutter_application_1/models/products_model.dart';
-import 'package:flutter_application_1/providers/cart_prodivder.dart';
-import 'package:flutter_application_1/providers/wishlist_provider.dart';
-import 'package:flutter_application_1/services/global_methods.dart';
-import 'package:flutter_application_1/services/utils.dart';
-import 'package:flutter_application_1/widgets/hearth_btn.dart';
-import 'package:flutter_application_1/widgets/price_widget.dart';
-import 'package:flutter_application_1/widgets/text_widget.dart';
+import 'package:mobile_app/consts/firebase_consts.dart';
+import 'package:mobile_app/inner_screens/product_details_screen.dart';
+import 'package:mobile_app/models/products_model.dart';
+import 'package:mobile_app/providers/cart_prodivder.dart';
+import 'package:mobile_app/providers/wishlist_provider.dart';
+import 'package:mobile_app/services/global_methods.dart';
+import 'package:mobile_app/services/utils.dart';
+import 'package:mobile_app/widgets/hearth_btn.dart';
+import 'package:mobile_app/widgets/price_widget.dart';
+import 'package:mobile_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
 class FeedsWidget extends StatefulWidget {
@@ -67,8 +69,8 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             children: [
               FancyShimmerImage(
                 imageUrl: productModel.imageUrl,
-                height: size.width * 0.21,
-                width: size.width * 0.2,
+                height: size.width * 0.15,
+                width: size.width * 0.15,
                 boxFit: BoxFit.fill,
               ),
               Padding(
@@ -82,7 +84,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         text: productModel.title,
                         color: color,
                         maxLines: 1,
-                        textSize: 18,
+                        textSize: 16,
                         isTitle: true,
                       ),
                     ),
@@ -96,12 +98,12 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      flex: 4,
+                      flex: productModel.isPiece ? 3 : 6,
                       child: PriceWidget(
                         salePrice: productModel.salePrice,
                         price: productModel.price,
@@ -117,7 +119,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                             child: TextWidget(
                               text: productModel.isPiece ? 'Piece' : 'Kg',
                               color: color,
-                              textSize: 18,
+                              textSize: 16,
                               isTitle: true,
                             ),
                           ),
@@ -129,7 +131,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                               child: TextFormField(
                                 controller: _quantityTextController,
                                 key: const ValueKey('10'),
-                                style: TextStyle(color: color, fontSize: 18),
+                                style: TextStyle(color: color, fontSize: 16),
                                 keyboardType: TextInputType.number,
                                 maxLines: 1,
                                 enabled: true,
@@ -156,29 +158,36 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                           // if (_isCInCart) {
                           //   return;
                           // }
+                          final User? user = authInstance.currentUser;
+                          if (user == null) {
+                            GlobalMethods.errorDialog(
+                                subtitle: 'No user found, please log in first',
+                                context: context);
+                            return;
+                          }
                           cartProvider.addProductsToCart(
                               productId: productModel.id,
                               quantity:
                                   int.parse(_quantityTextController.text));
                         },
-                  child: TextWidget(
-                    text: _isCInCart ? 'In Cart' : 'Add to card',
-                    color: color,
-                    textSize: 20,
-                    maxLines: 1,
-                  ),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                           Theme.of(context).cardColor),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(12.0),
                             bottomRight: Radius.circular(12.0),
                           ),
                         ),
                       )),
+                  child: TextWidget(
+                    text: _isCInCart ? 'In Cart' : 'Add to card',
+                    color: color,
+                    textSize: 16,
+                    maxLines: 1,
+                  ),
                 ),
               )
             ],
